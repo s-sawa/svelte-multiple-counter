@@ -15,7 +15,7 @@
 
 <div class="counter">
   <div>
-	<input type="text" placeholder="new">
+    <input type="text" placeholder="new" />
   </div>
   <div class="counter-viewport">
     <div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
