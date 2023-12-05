@@ -2,7 +2,6 @@ import { o as onDestroy, c as create_ssr_component, a as subscribe, d as each, e
 import { createForm as createForm$1 } from "@felte/core";
 import { w as writable } from "../../chunks/index2.js";
 import { p as page } from "../../chunks/stores.js";
-const Counter_svelte_svelte_type_style_lang = "";
 function __rest(s, e) {
   var t = {};
   for (var p in s)
@@ -29,7 +28,10 @@ const MultipleCounter = create_ssr_component(($$result, $$props, $$bindings, slo
   let $data, $$unsubscribe_data;
   let count = [0];
   const { form, data, addField, unsetField } = createForm({
-    initialValues: { counters: [{ value: "new" }] }
+    initialValues: {
+      // 入力フォームの初期値を 'new'でセットする
+      counters: [{ value: "new" }]
+    }
   });
   $$unsubscribe_data = subscribe(data, (value) => $data = value);
   counters = $data.counters;
@@ -39,11 +41,14 @@ const MultipleCounter = create_ssr_component(($$result, $$props, $$bindings, slo
   {
     console.log(count);
   }
+  {
+    console.log(typeof counters);
+  }
   sum = () => count.reduce((acc, curr) => acc + curr, 0);
   titleLists = () => counters.map((obj) => obj.value);
   $$unsubscribe_data();
   return `<form>${each(counters, (counter, index) => {
-    return `<div><input name="${"counters." + escape(index, true) + ".value"}"> ${escape(count[index])} <button data-svelte-h="svelte-8bj1e8">+</button> <button data-svelte-h="svelte-xk61is">-</button> <button data-svelte-h="svelte-1l1ex8d">0</button>   <button type="button" data-svelte-h="svelte-stofmk">Remove Counter</button> </div>`;
+    return `<div><input name="${"counters." + escape(index, true) + ".value"}"> ${escape(count[index])} <button data-svelte-h="svelte-8bj1e8">+</button> <button data-svelte-h="svelte-xk61is">-</button> <button data-svelte-h="svelte-1l1ex8d">0</button> <button type="button" data-svelte-h="svelte-stofmk">Remove Counter</button> </div>`;
   })}</form> <button type="button" data-svelte-h="svelte-1vlbtck">New Counter</button>  <div><p>title list: ${escape(titleLists())}</p> <p>sum of count: ${escape(sum())}</p></div>`;
 });
 const welcome = "/_app/immutable/assets/svelte-welcome.c18bcf5a.webp";

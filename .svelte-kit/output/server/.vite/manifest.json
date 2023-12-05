@@ -132,7 +132,7 @@
     "src": "src/routes/+layout.svelte"
   },
   "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page.00e3a3a9.css",
+    "file": "_app/immutable/assets/_page.a6bf98ef.css",
     "src": "src/routes/+page.css"
   },
   "src/routes/+page.svelte": {
@@ -141,7 +141,7 @@
       "_app/immutable/assets/svelte-welcome.6c300099.png"
     ],
     "css": [
-      "_app/immutable/assets/_page.00e3a3a9.css"
+      "_app/immutable/assets/_page.a6bf98ef.css"
     ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
@@ -206,12 +206,12 @@
     "src": "src/routes/sverdle/+page.svelte"
   },
   "src/routes/sverdle/how-to-play/+page.css": {
-    "file": "_app/immutable/assets/_page.89a9e780.css",
+    "file": "_app/immutable/assets/_page.f13333a0.css",
     "src": "src/routes/sverdle/how-to-play/+page.css"
   },
   "src/routes/sverdle/how-to-play/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.89a9e780.css"
+      "_app/immutable/assets/_page.f13333a0.css"
     ],
     "file": "entries/pages/sverdle/how-to-play/_page.svelte.js",
     "imports": [
