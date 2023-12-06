@@ -1,40 +1,43 @@
-# create-svelte
+# Svelte TypeScript Multiple Counter App
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+このプロジェクトは、SvelteフレームワークとTypeScriptを使用して、複数のカウンターを機能を実装しました。
 
-## Creating a project
+## コーディングルール
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **言語:** TypeScript
+- **フレームワーク:** Svelte
+- **インデント:** 半角スペース2個分
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## システム要件
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **カウンター機能:**
+  - カウントの増減機能
+  - カウントのリセット機能
+- **カウンター管理:**
+  - カウンターの追加および削除機能
+  - 各カウンターのタイトル設定機能
+  - 複数のカウンターの合計値表示機能
 
-## Developing
+## 工夫した点
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **パフォーマンス:** Svelteのリアクティブ機能を活用し、UIのリアルタイム更新を可能にしました。
+- **Felteライブラリ:** フォームライブラリのFelteを使用することで、フォームの追加、削除等を少ないコード量で実装できました。
 
-```bash
-npm run dev
+## 難しかった点
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- **状態管理:** 複数のカウンターと全体の状態をリアルタイムで更新する方法の実装。
+リアクティブな変数宣言を使用してリアルタイム更新をすることができました。Reactでの状態管理と比較してより簡潔なコードで実装でき、Svelteの便利さを実感しました。
 
-## Building
+- **リアクティブの考え方：** リアクティブな状態管理において、配列の更新が適切に反映されないケースがありました。
+Svelteは配列のメモリアドレスを参照しているため、元の配列に直接変更を加える方法（例：`count.push(0)`）は、メモリアドレスが変更されないため、変更が検知されないことが分かりました。
+Svelteでは変更を検知させるために新しい配列を割り当てる（=メモリアドレスが変更）必要があり、（例：`count = [...count, 0]`）、この仕組みと配列の更新方法の理解が特に難しく感じました。
 
-To create a production version of your app:
+```mermaid
+graph TD
+    A[配列の変更] -->|メモリアドレスが変わらない場合(count.push(0))| B[リアクティブ更新なし]
+    A -->|メモリアドレスが変わる場合(count = [...count, 0])| C[リアクティブ更新あり]
+    B --> D[配列の要素を変更しても、Svelteは検知しない]
+    C --> E[新しい配列（新しいメモリアドレス）が作成される]
+    E --> F[配列の変更がSvelteによって検知される]
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-# svelte-multiple-counter
+- **デプロイ:** AWS Amplifyにデプロイ時に「ページが見つかりません」というエラーが発生した点。この問題は、「adapter-static」プラグインを導入し、svelte.config.jsファイルに適切なadapterの設定を、amplify.ymlにビルドファイルのパスを正しく設定することで解決した。
