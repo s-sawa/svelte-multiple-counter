@@ -1,6 +1,6 @@
 # Svelte TypeScript Multiple Counter App
 
-このプロジェクトは、SvelteフレームワークとTypeScriptを使用して、複数のカウンターを機能を実装しました。
+SvelteフレームワークとTypeScriptを使用して、複数のカウンターを機能を実装したプロジェクトです。
 
 ## コーディングルール
 
