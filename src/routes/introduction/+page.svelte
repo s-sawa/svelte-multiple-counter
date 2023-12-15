@@ -11,17 +11,63 @@
   let count2 = 0;
   let numbers = [1, 2, 3, 4];
 
-  const pkg = {
+  // pkgの型定義
+  interface Pkg {
+    name: string;
+    version: number;
+    speed: string;
+    website: string;
+  }
+  const pkg: Pkg = {
     name: 'svelte',
     version: 3,
     speed: 'blazing',
     website: 'https://svelte.dev'
   };
 
+  let user = { loggedIn: false };
+
+  interface Cat {
+    id: String;
+    name: String;
+  }
+  let cats: Cat[] = [
+    { id: 'J---aiyznGQ', name: 'Keyboard Cat' },
+    { id: 'z_AbfPXTKms', name: 'Maru' },
+    { id: 'OUtn3pvWmpg', name: 'Henri The Existential Cat' }
+  ];
+
+  interface Todo {
+    userId: number;
+    id: number;
+    title: string;
+    completed: boolean;
+  }
+
+  let limit = 5;
+  let promise: Promise<Todo[]>;
+
+  const getTodos = async (): Promise<Todo[]> => {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
+    const todos = await res.json();
+
+    if (res.ok) {
+      return todos;
+    } else {
+      throw new Error(todos);
+    }
+  };
+
+  $: if (limit) {
+    promise = getTodos();
+  }
+  const handleClick2 = () => {
+    promise = getTodos();
+  };
   $: doubled = count2 * 2;
   const incrementCount = () => {
     count++;
-    $: console.log(count);
+    // $: console.log(count);
   };
   const handleClick = () => count2++;
 
@@ -29,6 +75,8 @@
     numbers = [...numbers, numbers.length + 1];
   };
   $: sum = numbers.reduce((acc, curr) => acc + curr, 0);
+
+  const toggle = () => (user.loggedIn = !user.loggedIn);
 </script>
 
 <svelte:head>
@@ -103,6 +151,59 @@
       展開しないと書くのが大変。name&equals;&lbrace;pkg.name&rbrace;
       ;version&equals;&lbrace;pkg.version&rbrace;...とプロパティが多いほど大変
     </p>
+    <hr />
+  </section>
+
+  <section>
+    <h3 class="section">Logic / if blocks</h3>
+
+    {#if user.loggedIn}
+      <button on:click={toggle}>Logout</button>
+    {/if}
+    {#if !user.loggedIn}
+      <button on:click={toggle}>Login</button>
+    {/if}
+    <p class="box">
+      &lbrace;#if 条件&rbrace;<br />
+      html<br />
+      &lbrace;/if&rbrace;で囲うことで条件分に応じてレンダリングが可能
+    </p>
+    <hr />
+  </section>
+
+  <section>
+    <h3 class="section">Logic / Each blocks</h3>
+
+    <ul>
+      {#each cats as { id, name }, i}
+        <li>
+          <a target="_blank" href="https://www.youtube.com/watch?v={id}" rel="noreferrer">
+            {i + 1}: {name}
+          </a>
+        </li>
+      {/each}
+    </ul>
+    <p class="box">
+      catsをcatとして取り出せる。取り出す際に分割代入ができたり、インデックスを取得できたりも可能
+    </p>
+    <hr />
+  </section>
+
+  <section>
+    <h3 class="section">Await blocks</h3>
+    <p>取得件数</p>
+    <input type="number" min="1" bind:value={limit} />
+    <button on:click={handleClick2}>todoを取得</button>
+    {#await promise}
+      <p>...waiting</p>
+    {:then todos}
+      {#each todos as todo}
+        <p>{todo.title}</p>
+      {/each}
+    {:catch error}
+      <p style="color: red">{error.message}</p>
+    {/await}
+    <p class="box"></p>
     <hr />
   </section>
 </div>
