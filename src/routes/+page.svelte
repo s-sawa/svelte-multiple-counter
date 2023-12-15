@@ -1,11 +1,13 @@
 <script>
   import MultipleCounter from './MultipleCounter.svelte';
+  import { page } from '$app/stores';
 </script>
 
 <svelte:head>
   <title>Home</title>
   <meta name="description" content="Svelte demo app" />
 </svelte:head>
+
 
 <section>
   <h1>Multiple Counter</h1>
